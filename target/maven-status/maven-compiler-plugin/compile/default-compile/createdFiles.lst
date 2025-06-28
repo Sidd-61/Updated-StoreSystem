@@ -1,4 +1,10 @@
-LoginForm$1.class
-LoginForm2.class
 com\mycompany\loginapp\LoginApp.class
+DatabaseConnection.class
+HomePage$1.class
+Settings.class
+HomePage$3.class
+LoginForm$1.class
+HomePage.class
+ViewProfile.class
 LoginForm.class
+HomePage$2.class
