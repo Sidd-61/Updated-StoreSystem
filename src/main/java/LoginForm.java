@@ -19,23 +19,23 @@ public class LoginForm extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     setResizable(false);
-        getContentPane().setBackground(new java.awt.Color(230,230,250)); 
-        // Label font and color (for all your JLabel objects)
-loginLabel.setForeground(new java.awt.Color(102, 51, 153));
-usernameLabel.setForeground(new java.awt.Color(102, 51, 153));
-passwordLabel.setForeground(new java.awt.Color(102, 51, 153));
+        getContentPane().setBackground(new java.awt.Color(51,51,51)); 
+        // Label font and color (
+loginLabel.setForeground(new java.awt.Color(153, 0, 51));
+usernameLabel.setForeground(new java.awt.Color(153, 0, 51));
+passwordLabel.setForeground(new java.awt.Color(153, 0, 51));
 
 // TextField & PasswordField background
-usernameField.setBackground(new java.awt.Color(245, 240, 255));
-passwordField.setBackground(new java.awt.Color(245, 240, 255));
+usernameField.setBackground(new java.awt.Color(153, 0, 51));
+passwordField.setBackground(new java.awt.Color(153, 0, 51));
 
-// Optional: Set text color too
-usernameField.setForeground(new java.awt.Color(51, 0, 102));
-passwordField.setForeground(new java.awt.Color(51, 0, 102));
+// Set text color too
+usernameField.setForeground(new java.awt.Color(51,51,51));
+passwordField.setForeground(new java.awt.Color(51,51,51));
 
 // Button background & text
-loginButton.setBackground(new java.awt.Color(153, 102, 204));
-loginButton.setForeground(new java.awt.Color(255, 255, 255)); // white text
+loginButton.setBackground(new java.awt.Color(153, 0, 51));
+loginButton.setForeground(new java.awt.Color(51,51,51)); 
     }
 
     @SuppressWarnings("unchecked")
@@ -139,7 +139,7 @@ String username = usernameField.getText();
         ResultSet rs = pst.executeQuery();
 
         if (rs.next()) {
-            // Show your magical success message ✨
+            
             JOptionPane.showMessageDialog(this, "Login Successful! 💜");
  // Open Homepage
             this.dispose();
