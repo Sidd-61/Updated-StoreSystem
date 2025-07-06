@@ -1,2 +1,10 @@
-# LoginApp
-A cute LoginApp made with dreamy Java Swing login form built in NetBeans, featuring: 1) Custom lavender aesthetics 2) Responsive layout with elegant alignment 3) - Functional login logic with popup messages
+# StoreLoginSystem
+
+A Java-based login and homepage system with integrated product and buyer management. Featuring :-
+- User authentication with login form
+- Homepage with logout button and timestamp
+- Product page and buyer management
+- Input validation with clean formatting
+- Connected to MySQL via JDBC
+
+Technologies: Java Swing • JDBC • MySQL • NetBeans IDE
