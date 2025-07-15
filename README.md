@@ -1,6 +1,6 @@
 # Updated StoreSystem
 
-I gave updated this Java-based "StoreSystem" to include advanced product & buyer management features.
+I have updated this Java-based "StoreSystem" to include advanced product & buyer management features.
 
 ### 🔒 Key Features in Product and Buyer pages -
   - Edit & update existing records
