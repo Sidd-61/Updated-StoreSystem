@@ -11,19 +11,19 @@ public class HomePage extends javax.swing.JFrame {
         initComponents();
          setSize(500,400);
         setLocationRelativeTo(null);
-    setResizable(false);
+        setResizable(false);
         getContentPane().setBackground(new java.awt.Color(51,51,51)); 
-        welcomeLabel.setForeground(new java.awt.Color(153, 0, 51));
+        welcomeLabel.setForeground(new java.awt.Color(255, 255, 255));
         
         
         btnManageProducts.setBackground(new java.awt.Color(153, 0, 51));
-        btnManageProducts.setForeground(new java.awt.Color(51,51,51)); 
+        btnManageProducts.setForeground(new java.awt.Color(255, 255, 255)); 
         
         btnManageBuyers.setBackground(new java.awt.Color(153, 0, 51));
-        btnManageBuyers.setForeground(new java.awt.Color(51,51,51));
+        btnManageBuyers.setForeground(new java.awt.Color(255, 255, 255));
         
         logoutButton.setBackground(new java.awt.Color(153, 0, 51));
-        logoutButton.setForeground(new java.awt.Color(51,51,51)); 
+        logoutButton.setForeground(new java.awt.Color(255, 255, 255)); 
          }
 
     @SuppressWarnings("unchecked")

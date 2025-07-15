@@ -21,21 +21,21 @@ public class LoginForm extends javax.swing.JFrame {
     setResizable(false);
         getContentPane().setBackground(new java.awt.Color(51,51,51)); 
         // Label font and color (
-loginLabel.setForeground(new java.awt.Color(153, 0, 51));
-usernameLabel.setForeground(new java.awt.Color(153, 0, 51));
-passwordLabel.setForeground(new java.awt.Color(153, 0, 51));
+loginLabel.setForeground(new java.awt.Color(255, 255, 255));
+usernameLabel.setForeground(new java.awt.Color(255, 255, 255));
+passwordLabel.setForeground(new java.awt.Color(255, 255, 255));
 
 // TextField & PasswordField background
 usernameField.setBackground(new java.awt.Color(153, 0, 51));
 passwordField.setBackground(new java.awt.Color(153, 0, 51));
 
 // Set text color too
-usernameField.setForeground(new java.awt.Color(51,51,51));
-passwordField.setForeground(new java.awt.Color(51,51,51));
+usernameField.setForeground(new java.awt.Color(255, 255, 255));
+passwordField.setForeground(new java.awt.Color(255, 255, 255));
 
 // Button background & text
 loginButton.setBackground(new java.awt.Color(153, 0, 51));
-loginButton.setForeground(new java.awt.Color(51,51,51)); 
+loginButton.setForeground(new java.awt.Color(255, 255, 255)); 
     }
 
     @SuppressWarnings("unchecked")

@@ -12,4 +12,3 @@ com\mycompany\loginapp\LoginApp.class
 DatabaseConnection.class
 ProductPage.class
 HomePage.class
-ViewProfile.class

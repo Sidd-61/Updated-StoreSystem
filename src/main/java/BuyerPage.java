@@ -24,22 +24,25 @@ public class BuyerPage extends javax.swing.JFrame {
     }
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BuyerPage.class.getName());
-    JTextField tfName, tfEmail, tfPhone;
+    JTextField tfName, tfEmail, tfPhone, tfSearch;
     JTextArea taAddress;
-    JButton btnAdd;
+    JButton btnAdd, btnClear, btnSearch;
     JTable buyerTable;
     DefaultTableModel tableModel;
+    JLabel lblEditing;
+
     
     public BuyerPage() {
          setTitle("Buyer Management");
         setSize(800, 500);
         setLocationRelativeTo(null);
-    setResizable(false);
+        //setResizable(false);
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
         initForm();    // Top panel with form
         initTable();   // Center panel with JTable
+        initSearchBar();
 
     }
     @SuppressWarnings("unchecked")
@@ -63,18 +66,22 @@ public class BuyerPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
      
     private void initForm() {
-    JPanel formPanel = new JPanel(new GridLayout(5, 2, 10, 10));
+    JPanel formPanel = new JPanel(new GridLayout(6, 2, 10, 10));
     formPanel.setBackground(new Color(51, 51, 51));  // Dark background for elegance
 
     tfName = new JTextField();
     tfEmail = new JTextField();
     tfPhone = new JTextField();
     taAddress = new JTextArea(3, 20);
+    lblEditing = new JLabel(" ");
+    lblEditing.setForeground(Color.YELLOW);
+    lblEditing.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 14));
 
     btnAdd = new JButton("ADD BUYER");
     btnAdd.setBackground(new Color(153, 0, 51));       // Deep red button
     btnAdd.setForeground(Color.WHITE);                 // White text for contrast
     btnAdd.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 24));
+    btnAdd.setPreferredSize(new Dimension(280, 40));
 
     Color labelColor = (Color.WHITE);          
     Font labelFont = new Font("PMingLiU-ExtB", Font.BOLD, 18);
@@ -107,18 +114,74 @@ public class BuyerPage extends javax.swing.JFrame {
 
     formPanel.add(lblAddress);
     formPanel.add(new JScrollPane(taAddress));
+    
+    formPanel.add(lblEditing);
 
-    formPanel.add(new JLabel("")); // Spacer to align button
+        JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        actionPanel.setBackground(new Color(51, 51, 51));
+        actionPanel.add(btnAdd);
+        actionPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        
+        btnClear = new JButton("CLEAR");
+        btnClear.setBackground(new Color(153, 0, 51));
+        btnClear.setForeground(Color.WHITE);
+        btnClear.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 18));
+        btnClear.setPreferredSize(new Dimension(120, 40));
+        actionPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+
+        actionPanel.add(btnClear);
+
+        formPanel.add(actionPanel);
+        add(formPanel, BorderLayout.NORTH);
+
+        btnAdd.addActionListener(e -> addBuyer());
+
+        btnClear.addActionListener(e -> {
+            resetForm();
+            lblEditing.setText(" ");
+            btnAdd.setText("ADD BUYER");
+            for (ActionListener al : btnAdd.getActionListeners()) btnAdd.removeActionListener(al);
+            btnAdd.addActionListener(ev -> addBuyer());
+        });
+    
+
+    
+        /*formPanel.add(new JLabel("")); // Spacer to align button
     formPanel.add(btnAdd);         // Button in final cell
 
     add(formPanel, BorderLayout.NORTH);
-    btnAdd.addActionListener(e -> addBuyer());
+    btnAdd.addActionListener(e -> addBuyer()); */
 }
+    
+    private void initSearchBar() {
+        tfSearch = new JTextField(20);
+        btnSearch = new JButton("SEARCH");
+        btnSearch.setBackground(new Color(153, 0, 51));
+        btnSearch.setForeground(Color.WHITE);
+        btnSearch.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 18));
 
+        JPanel searchPanel = new JPanel(new FlowLayout());
+        searchPanel.setBackground(new Color(51, 51, 51));
+
+        JLabel searchLabel = new JLabel("Search by Name or Email");
+        searchLabel.setForeground(Color.WHITE);
+        searchLabel.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 16));
+
+        searchPanel.add(searchLabel);
+        searchPanel.add(tfSearch);
+        searchPanel.add(btnSearch);
+
+        add(searchPanel, BorderLayout.SOUTH);
+
+        btnSearch.addActionListener(e -> searchBuyers());
+    }
+    
+    
       private void initTable() {
-        tableModel = new DefaultTableModel(new String[]{"ID", "Name", "Email", "Phone", "Address", "Delete"}, 0);
+        tableModel = new DefaultTableModel(new String[]{"ID", "Name", "Email", "Phone", "Address", "Delete", "Edit"}, 0);
         buyerTable = new JTable(tableModel);
         buyerTable.getColumn("Delete").setCellRenderer(new DeleteCellRenderer());
+        buyerTable.getColumn("Edit").setCellRenderer(new DeleteCellRenderer());
 
         buyerTable.getTableHeader().setBackground(new Color(51,51,51));
         buyerTable.getTableHeader().setForeground(Color.WHITE);
@@ -128,19 +191,20 @@ public class BuyerPage extends javax.swing.JFrame {
 
         add(new JScrollPane(buyerTable), BorderLayout.CENTER);
 
-        buyerTable.addMouseListener(new MouseAdapter() {
+         buyerTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int col = buyerTable.getSelectedColumn();
                 int row = buyerTable.getSelectedRow();
-                if (col == 5) {
-                    int id = Integer.parseInt(buyerTable.getValueAt(row, 0).toString());
-                    deleteBuyer(id);
-                }
+                int id = Integer.parseInt(buyerTable.getValueAt(row, 0).toString());
+
+                if (col == 5) deleteBuyer(id);
+                else if (col == 6) populateFieldsForEdit(id);
             }
         });
 
         loadBuyers();
     }
+
 
 
     public static void main(String [] args) {
@@ -196,6 +260,104 @@ public class BuyerPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
         }
     }
+     
+     
+     private void updateBuyer(int id) {
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/logindatabse", "root", "");
+            String sql = "UPDATE buyers SET name=?, email=?, phone=?, address=? WHERE id=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, tfName.getText().trim());
+            ps.setString(2, tfEmail.getText().trim());
+            ps.setString(3, tfPhone.getText().trim());
+            ps.setString(4, taAddress.getText().trim());
+            ps.setInt(5, id);
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Buyer updated!");
+            resetForm();
+            btnAdd.setText("ADD BUYER");
+            lblEditing.setText(" ");
+
+            for (ActionListener al : btnAdd.getActionListeners()) btnAdd.removeActionListener(al);
+            btnAdd.addActionListener(e -> addBuyer());
+            loadBuyers();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Update error: " + ex.getMessage());
+        }
+    }
+
+    private void populateFieldsForEdit(int id) {
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/logindatabse", "root", "");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM buyers WHERE id=?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                tfName.setText(rs.getString("name"));
+                tfEmail.setText(rs.getString("email"));
+                tfPhone.setText(rs.getString("phone"));
+                taAddress.setText(rs.getString("address"));
+
+                lblEditing.setText("Currently Editing: ID " + id);
+                btnAdd.setText("UPDATE BUYER");
+
+                for (ActionListener al : btnAdd.getActionListeners()) btnAdd.removeActionListener(al);
+                btnAdd.addActionListener(e -> updateBuyer(id));
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Edit error: " + ex.getMessage());
+        }
+    }
+
+    private void searchBuyers() {
+        String keyword = tfSearch.getText().trim().toLowerCase();
+        boolean found = false;
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/logindatabse", "root", "");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM buyers WHERE LOWER(name) LIKE ? OR LOWER(email) LIKE ?");
+            ps.setString(1, "%" + keyword + "%");
+            ps.setString(2, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+
+            DefaultTableModel tempModel = new DefaultTableModel(new String[]{"ID", "Name", "Email", "Phone", "Address", "Delete", "Edit"}, 0);
+
+            while (rs.next()) {
+                found = true;
+                tempModel.addRow(new Object[]{
+                    rs.getInt("id"), rs.getString("name"), rs.getString("email"),
+                    rs.getString("phone"), rs.getString("address"), "Delete", "Edit"
+                });
+            }
+
+            if (found) {
+        tableModel.setRowCount(0);
+        for (int i = 0; i < tempModel.getRowCount(); i++) {
+            tableModel.addRow(new Object[]{
+                tempModel.getValueAt(i, 0),
+                tempModel.getValueAt(i, 1),
+                tempModel.getValueAt(i, 2),
+                tempModel.getValueAt(i, 3),
+                tempModel.getValueAt(i, 4),
+                "Delete",
+                "Edit"
+            });
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "No matching buyer found :(");
+    }
+
+} catch (Exception ex) {
+    JOptionPane.showMessageDialog(null, "Search error: " + ex.getMessage());
+}
+    }
+private void resetForm() {
+    tfName.setText("");
+    tfEmail.setText("");
+    tfPhone.setText("");
+    taAddress.setText("");
+}
 
     private void loadBuyers() {
         tableModel.setRowCount(0);
@@ -210,7 +372,8 @@ public class BuyerPage extends javax.swing.JFrame {
                     rs.getString("email"),
                     rs.getString("phone"),
                     rs.getString("address"),
-                    "Delete"
+                    "Delete",
+                    "Edit"
                 });
             }
         } catch (Exception ex) {
