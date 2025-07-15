@@ -1,10 +1,17 @@
-# StoreLoginSystem
+# Updated StoreSystem
 
-A Java-based login and homepage system with integrated product and buyer management. Featuring :-
-- User authentication with login form
-- Homepage with logout button and timestamp
-- Product page and buyer management
-- Input validation with clean formatting
-- Connected to MySQL via JDBC
+This Java-based StoreSystem combines user authentication, homepage UI, and advanced product & buyer management features.
 
-Technologies: Java Swing • JDBC • MySQL • NetBeans IDE
+### 🔒 Key Features
+- User authentication with login and logout flow
+- Homepage showing dynamic timestamp
+- Product and Buyer pages with:
+  - Edit & update existing records
+  - Search by category or item name
+  - Clear button to reset fields
+  - Live feedback showing which record is being edited
+
+### 🧰 Technologies Used
+Java Swing • JDBC • MySQL • NetBeans IDE
+
+🎬 [Click to watch demo video](video/Task6Demo.mp4)
