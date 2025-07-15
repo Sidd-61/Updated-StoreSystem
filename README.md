@@ -1,11 +1,8 @@
 # Updated StoreSystem
 
-This Java-based StoreSystem combines user authentication, homepage UI, and advanced product & buyer management features.
+I gave updated this Java-based "StoreSystem" to include advanced product & buyer management features.
 
-### 🔒 Key Features
-- User authentication with login and logout flow
-- Homepage showing dynamic timestamp
-- Product and Buyer pages with:
+### 🔒 Key Features in Product and Buyer pages -
   - Edit & update existing records
   - Search by category or item name
   - Clear button to reset fields
@@ -14,4 +11,4 @@ This Java-based StoreSystem combines user authentication, homepage UI, and advan
 ### 🧰 Technologies Used
 Java Swing • JDBC • MySQL • NetBeans IDE
 
-🎬 [Click to watch demo video](video/Task6Demo.mp4)
+🎬 [Click to watch demo video](video/StoreSystem2.mp4)
